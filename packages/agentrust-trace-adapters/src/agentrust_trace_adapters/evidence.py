@@ -114,10 +114,14 @@ class PolicyEvidence:
     That is not a reason to hash something else, so this class takes only bytes,
     and the deployment supplies them: an operator knows the policy it runs even
     when its vendor's export does not carry it.
+
+    ``enforcement_mode`` has no default. TRACE spec section 4.3 says ``declared``
+    MUST NOT be a default, and defaulting to ``enforce`` would claim enforcement
+    nobody established, so the caller states which one is true.
     """
 
     bundle: bytes
-    enforcement_mode: str = "declared"
+    enforcement_mode: str
     version: str | None = None
     policy_uri: str | None = None
 
