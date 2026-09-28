@@ -18,6 +18,8 @@ transitive NLTK dependency to 3.10.3, affected by
 with no patched release listed at verification time. These tests do not use
 NLTK's affected model-file APIs. A passing interoperability run is not a clean
 dependency-security audit; reassess dependencies for deployment.
+`osv-scanner.toml` in this directory ignores that one advisory until 2026-12-24,
+when it is due for review.
 
 Use a fresh tracker for each run and pass events from that run's stream to
 `observe_workflow`. No global dispatcher registration is needed. Supply the
@@ -48,6 +50,7 @@ async def run_with_record(
     unsigned = tracker.build_record(
         subject=subject,
         policy_bundle=policy_bundle,       # bytes of the declared policy
+        enforcement_mode="declared",       # required; nothing evaluated the policy
         workload_digest=workload_digest,   # digest of your artifact
         model_provider=model_provider,
         model_id=model_id,
@@ -131,9 +134,11 @@ retain `appraisal.status: none`. Signing binds the record to its signing key;
 it does not attest the observer, authenticate model-supplied tool identity,
 prove safe behavior, or establish hardware provenance or runtime integrity.
 
-`policy.enforcement_mode` defaults to `declared`: the caller's policy is named
-and hashed, but LlamaIndex has not evaluated or enforced it. Supplying another
-mode requires an actual external policy layer. Supplied attestation fields are
+`policy.enforcement_mode` is required. A bare LlamaIndex run is `declared`: the
+caller's policy is named and hashed, but LlamaIndex has not evaluated or
+enforced it. TRACE spec section 4.3 says `declared` MUST NOT be a default, so the
+caller states it. Supplying another mode requires an actual external policy
+layer. Supplied attestation fields are
 passed through by the existing record builder; this adapter does not verify
 them or independently establish Level 1 assurance.
 
