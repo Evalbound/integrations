@@ -40,6 +40,7 @@ TRACE only works as a standard if it is genuinely neutral. Integrations are list
 | [claude-code](claude-code/) | agentrust-io | agent-manifest, trace | community |
 | [Agent Passport System](integrations/aeoess-aps/) | aeoess | trace | verified |
 | [cA2A Cross-Operator Delegation](integrations/agentrust-ca2a-cross-operator/) | agentrust-io | ca2a | community |
+| [Confidential Workflow Acceptance Harness](integrations/agentrust-confidential-workflow-harness/) | agentrust-io | cmcp, ca2a | community |
 | [Agent Replay](integrations/altrudev-agent-replay/) | Altru.dev | trace | verified |
 | [Bernstein MCP verifier](integrations/bernstein-mcp/) | Bernstein | trace | verified |
 | [CHAP](integrations/chap/) | agentrust-io | trace | verified |
@@ -60,7 +61,6 @@ TRACE only works as a standard if it is genuinely neutral. Integrations are list
 | [ramen-ai cMCP Adapter](integrations/ramen-ai-cmcp/) | ramen-ai | cmcp, trace | verified |
 | [SAGE AgenTrust Bridge](integrations/sage-agenttrust/) | SAGE | cmcp, trace | community |
 | [Agent Sentinel](integrations/sentinel/) | a1k7 | trace | community |
-| [Shadow AI Discovery](integrations/shadow-ai/) | agentrust-io | cmcp, agent-manifest | community |
 | [Agentic SpendGuard](integrations/spendguard/) | SpendGuard | trace | community |
 | [WCM Agent Manifest Binding](integrations/wcm-agent-manifest/) | agentrust-io | wcm, agent-manifest | community |
 | [WCM Azure Secure Key Release](integrations/wcm-azure-skr/) | agentrust-io | wcm | community |
@@ -101,6 +101,10 @@ The [Copilot](copilot/), [Cursor](cursor/), [Windsurf](windsurf/) and
 [Gemini CLI](gemini-cli/) drift checks are intentionally outside this manifest
 index: none of them emit TRACE or Agent Manifest today, so none can truthfully
 select an `integrates_with` value from the current schema. See the note below.
+
+[Shadow AI Discovery](shadow-ai/) is also standalone tooling outside the index
+and Marketplace. It scans enriched records against an agent-to-tools registry;
+it has no direct cMCP adapter and does not read or write Agent Manifest records.
 
 All seven engines share [`agentrust-capture-core`](packages/agentrust-capture-core),
 which owns fingerprinting, comparison, baseline sealing and the report honesty rules.
